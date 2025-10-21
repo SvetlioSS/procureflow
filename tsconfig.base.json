@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    /* Language & emit */
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "useUnknownInCatchVariables": true,
+
+    /* Interop & hygiene */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+
+    /* Project refs (monorepo) */
+    "composite": true,
+
+    /* Monorepo paths */
+    "baseUrl": ".",
+    "paths": {
+      "@schemas/*": ["packages/schemas/src/*"],
+      "@shared/*": ["packages/shared/src/*"]
+    }
+  },
+
+  /* Let each package/app set its own include/outDir/rootDir */
+  "exclude": ["node_modules", "dist", "build"]
+}
