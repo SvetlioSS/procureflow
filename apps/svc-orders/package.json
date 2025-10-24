@@ -13,6 +13,7 @@
     "prisma:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@fastify/cors": "^11.1.0",
     "@fastify/type-provider-typebox": "^4.1.0",
     "@prisma/client": "^6.17.1",
     "@sinclair/typebox": "^0.33.22",

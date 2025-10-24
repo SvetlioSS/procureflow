@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 import { Static, Type as T } from "@sinclair/typebox";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
+import cors from "@fastify/cors";
 
 dotenv.config();
 
@@ -24,6 +25,16 @@ const app = Fastify({
     },
   },
 }).withTypeProvider<TypeBoxTypeProvider>();
+
+if (!process.env.WEB_ORIGIN) {
+  throw new Error("Missing Web Origin!");
+}
+
+await app.register(cors, {
+  origin: [process.env.WEB_ORIGIN],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+});
 
 // ====================================================================
 // =  Health
