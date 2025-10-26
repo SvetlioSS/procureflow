@@ -21,12 +21,7 @@ export function usePR(id: string) {
     queryKey: ["pr", id],
     queryFn: async (): Promise<PurchaseRequest> => {
       const { data } = await api.get(`/pr/${id}`);
-      return {
-        ...data,
-        createdAt: new Date(data.createdAt).toISOString(),
-        updatedAt: new Date(data.updatedAt).toISOString(),
-        items: JSON.parse(data.items),
-      };
+      return data;
     },
     enabled: !!id,
   });

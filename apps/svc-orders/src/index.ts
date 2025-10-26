@@ -210,8 +210,15 @@ app.post<{ Params: PRRejectParams; Body: PRRejectBody }>(
   }
 );
 
+// ────────────────────────────────────────────────────────────────────
+// Start
+// ────────────────────────────────────────────────────────────────────
 const port = Number(process.env.PORT) || 4001;
 app.listen({ port, host: "0.0.0.0" }).catch((err) => {
   app.log.error(err);
   process.exit(1);
 });
+
+// Graceful shutdown (optional)
+process.on("SIGTERM", () => void app.close());
+process.on("SIGINT", () => void app.close());
