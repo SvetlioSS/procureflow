@@ -7,13 +7,6 @@ import cors from "@fastify/cors";
 
 dotenv.config();
 
-// TODO: Verify everything here:
-// 1. Fastify usage and endpoints practices like error handling, status codes handling
-// 2. Schema validation of requests
-// 3. Verify SQL schemas
-// 4. Verify business logic of services + DB
-// 5. Check for best practices
-
 const prisma = new PrismaClient();
 
 const app = Fastify({
@@ -34,6 +27,7 @@ await app.register(cors, {
   origin: [process.env.WEB_ORIGIN],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type"],
+  exposedHeaders: ["X-Request-ID"],
 });
 
 // ====================================================================
@@ -133,13 +127,13 @@ type AssessmentGetLastParams = Static<typeof AssessmentGetLastParamsSchema>;
 app.get<{ Params: AssessmentGetLastParams }>(
   "/pr/:id/assessment/last",
   { schema: { params: AssessmentGetLastParamsSchema } },
-  async (req) => {
-    const { id } = req.params;
+  async (req, reply) => {
     const last = await prisma.assessment.findFirst({
-      where: { prId: id },
+      where: { prId: req.params.id },
       orderBy: { createdAt: "desc" },
     });
-    return last ?? { error: "NONE" };
+    if (!last) return reply.code(204).send();
+    return last;
   }
 );
 

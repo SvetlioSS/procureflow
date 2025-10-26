@@ -9,3 +9,4 @@
 7. Expand business functionalities
 8. Get rid of "json" types from prisma and use separate tables
 9. Use Postgre instead of SQLite
+10. Fix "any" usage
